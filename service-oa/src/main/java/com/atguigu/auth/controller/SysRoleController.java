@@ -1,7 +1,6 @@
 package com.atguigu.auth.controller;
 
 import com.atguigu.auth.service.SysRoleService;
-import com.atguigu.common.config.exception.GuiguException;
 import com.atguigu.common.result.Result;
 import com.atguigu.model.system.SysRole;
 import com.atguigu.vo.system.SysRoleQueryVo;
@@ -28,11 +27,11 @@ public class SysRoleController {
     public Result findAll(){
         List<SysRole> list = sysRoleService.list();
 
-        try {
-            int i = 10 / 0;
-        } catch (Exception e) {
-            throw new GuiguException(2001, "执行了自定义异常处理..");
-        }
+//        try {
+//            int i = 10 / 0;
+//        } catch (Exception e) {
+//            throw new GuiguException(2001, "执行了自定义异常处理..");
+//        }
 
         return Result.ok(list);
     }
