@@ -48,6 +48,25 @@ public class SysUserController {
         return Result.ok(sysUser);
     }
 
+    @ApiOperation("保存用户")
+    @PostMapping("/save")
+    public Result save(@RequestBody SysUser sysUser){
+        boolean isSuccess = sysUserService.save(sysUser);
+        return isSuccess ? Result.ok() : Result.fail();
+    }
 
+    @ApiOperation("更新用户")
+    @PutMapping("/update")
+    public Result updateById(@RequestBody SysUser sysUser){
+        boolean isSuccess = sysUserService.updateById(sysUser);
+        return isSuccess ? Result.ok() : Result.fail();
+    }
+
+    @ApiOperation("删除用户")
+    @DeleteMapping("/remove/{id}")
+    public Result remove(@PathVariable("id") Long id){
+        boolean isSuccess = sysUserService.removeById(id);
+        return isSuccess ? Result.ok() : Result.fail();
+    }
 }
 
