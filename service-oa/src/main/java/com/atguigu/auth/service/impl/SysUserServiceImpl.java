@@ -22,6 +22,8 @@ import org.springframework.util.StringUtils;
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
+
+
     //用户条件分页查询
     @Override
     public IPage<SysUser> index(Page<SysUser> pageParam, SysUserQueryVo sysUserQueryVo) {
@@ -46,4 +48,19 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         return baseMapper.selectPage(pageParam, wrapper);
     }
+
+    //更新状态
+    @Override
+    public void updateStatus(Long id, Integer status) {
+        //根据userId查询用户
+        SysUser sysUser = baseMapper.selectById(id);
+
+        //设置修改状态
+        sysUser.setStatus(status);
+
+        //调用方法进行修改
+        baseMapper.updateById(sysUser);
+    }
+
+
 }

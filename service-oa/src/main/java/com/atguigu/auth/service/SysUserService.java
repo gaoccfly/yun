@@ -18,4 +18,7 @@ public interface SysUserService extends IService<SysUser> {
 
     //用户条件分页查询
     IPage<SysUser> index(Page<SysUser> pageParam, SysUserQueryVo sysUserQueryVo);
+
+    //更新状态
+    void updateStatus(Long id, Integer status);
 }

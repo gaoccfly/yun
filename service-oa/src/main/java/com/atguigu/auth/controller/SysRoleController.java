@@ -3,6 +3,7 @@ package com.atguigu.auth.controller;
 import com.atguigu.auth.service.SysRoleService;
 import com.atguigu.common.result.Result;
 import com.atguigu.model.system.SysRole;
+import com.atguigu.vo.system.AssginRoleVo;
 import com.atguigu.vo.system.SysRoleQueryVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Api(tags = "角色管理接口")
 @RestController
@@ -20,6 +22,21 @@ public class SysRoleController {
 
     @Resource
     private SysRoleService sysRoleService;
+
+
+    @ApiOperation("查询所有角色和当前用户所属角色")
+    @GetMapping("/toAssign/{userId}")
+    public Result toAssign(@PathVariable("userId") Long userId){
+        Map<String, Object> map = sysRoleService.findRoleDataByUserId(userId);
+        return Result.ok(map);
+    }
+
+    @ApiOperation("为用户分配角色")
+    @PostMapping("/doAssign")
+    public Result doAssign(@RequestBody AssginRoleVo assginRoleVo){
+        sysRoleService.doAssign(assginRoleVo);
+        return Result.ok();
+    }
 
     //查询所有角色
     @ApiOperation("查询所有角色")
