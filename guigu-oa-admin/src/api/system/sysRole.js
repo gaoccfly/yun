@@ -8,7 +8,7 @@ export default{
             url: `${api_name}/${current}/${limit}`,
             method: 'get',
             params: searchObj
-          })
+        })
     },
 
     //角色删除
