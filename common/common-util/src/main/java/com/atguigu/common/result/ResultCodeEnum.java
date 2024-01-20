@@ -2,6 +2,10 @@ package com.atguigu.common.result;
 
 import lombok.Getter;
 
+/**
+ * 统一返回结果状态信息类
+ *
+ */
 @Getter
 public enum ResultCodeEnum {
 
@@ -15,9 +19,10 @@ public enum ResultCodeEnum {
     ;
 
     private Integer code;
+
     private String message;
 
-    ResultCodeEnum(Integer code, String message) {
+    private ResultCodeEnum(Integer code, String message) {
         this.code = code;
         this.message = message;
     }
