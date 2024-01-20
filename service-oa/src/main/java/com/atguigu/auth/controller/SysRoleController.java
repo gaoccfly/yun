@@ -4,6 +4,7 @@ import com.atguigu.auth.model.system.SysRole;
 import com.atguigu.auth.service.SysRoleService;
 
 import com.atguigu.auth.vo.system.SysRoleQueryVo;
+import com.atguigu.common.config.exception.GuiguException;
 import com.atguigu.common.result.Result;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -12,10 +13,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,6 +28,11 @@ public class SysRoleController {
     @ApiOperation(value = "获取全部角色列表")
     @GetMapping("findAll")
     public Result<List<SysRole>> findAll() {
+//        try {
+//            int a = 10/0;
+//        }catch(Exception e) {
+//            throw new GuiguException(20001,"出现自定义异常");
+//        }
         List<SysRole> roleList = sysRoleService.list();
         return Result.ok(roleList);
     }
@@ -56,5 +60,58 @@ public class SysRoleController {
         //3 调用方法实现
         IPage<SysRole> pageModel = sysRoleService.page(pageParam, wrapper);
         return Result.ok(pageModel);
+    }
+
+    @ApiOperation(value = "根据id查询")
+    @GetMapping("get/{id}")
+    public Result get(@PathVariable Long id) {
+        SysRole role = sysRoleService.getById(id);
+        return Result.ok(role);
+    }
+    //@RequestBody 请求体
+
+    @ApiOperation(value = "添加角色")
+    @PostMapping("save")
+    public Result save(@RequestBody @Validated SysRole role) {
+        boolean is_success= sysRoleService.save(role);
+        if (is_success){
+            return Result.ok();
+        }else {
+            return Result.fail();
+        }
+
+    }
+
+    @ApiOperation(value = "修改角色")
+    @PutMapping("update")
+    public Result updateById(@RequestBody SysRole role) {
+        boolean is_success= sysRoleService.updateById(role);
+        if (is_success){
+            return Result.ok();
+        }else {
+            return Result.fail();
+        }
+    }
+
+    @ApiOperation(value = "根据id删除角色")
+    @DeleteMapping("remove/{id}")
+    public Result remove(@PathVariable Long id) {
+        boolean is_success=    sysRoleService.removeById(id);
+        if (is_success){
+            return Result.ok();
+        }else {
+            return Result.fail();
+        }
+    }
+
+    @ApiOperation(value = "批量删除")
+    @DeleteMapping("batchRemove")
+    public Result batchRemove(@RequestBody List<Long> idList) {
+        boolean is_success=  sysRoleService.removeByIds(idList);
+        if (is_success){
+            return Result.ok();
+        }else {
+            return Result.fail();
+        }
     }
 }
