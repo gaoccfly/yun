@@ -1,24 +1,21 @@
 package com.atguigu.auth.service;
 
-import com.atguigu.model.system.SysUser;
-import com.atguigu.vo.system.SysUserQueryVo;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.atguigu.auth.model.system.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 /**
  * <p>
  * 用户表 服务类
  * </p>
  *
- * @author roy
- * @since 2023-03-09
+ * @author
+ * @since 2023-03-15
  */
+
 public interface SysUserService extends IService<SysUser> {
 
-    //用户条件分页查询
-    IPage<SysUser> index(Page<SysUser> pageParam, SysUserQueryVo sysUserQueryVo);
-
-    //更新状态
     void updateStatus(Long id, Integer status);
 }
