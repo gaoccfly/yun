@@ -1,7 +1,8 @@
 package com.atguigu.auth.service;
 
-import com.atguigu.model.system.SysMenu;
-import com.atguigu.vo.system.AssginMenuVo;
+
+import com.atguigu.auth.model.system.SysMenu;
+import com.atguigu.auth.vo.system.AssginMenuVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -11,11 +12,10 @@ import java.util.List;
  * 菜单表 服务类
  * </p>
  *
- * @author roy
- * @since 2023-03-23
+ * @author smg
+ * @since 2024-01-21
  */
 public interface SysMenuService extends IService<SysMenu> {
-
     //菜单列表
     List<SysMenu> findNodes();
 
