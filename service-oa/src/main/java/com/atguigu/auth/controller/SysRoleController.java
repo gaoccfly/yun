@@ -3,6 +3,7 @@ package com.atguigu.auth.controller;
 import com.atguigu.auth.model.system.SysRole;
 import com.atguigu.auth.service.SysRoleService;
 
+import com.atguigu.auth.vo.system.AssginRoleVo;
 import com.atguigu.auth.vo.system.SysRoleQueryVo;
 import com.atguigu.common.config.exception.GuiguException;
 import com.atguigu.common.result.Result;
@@ -17,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Api(tags = "角色管理")
 @RestController
@@ -25,6 +27,7 @@ public class SysRoleController {
 
     @Autowired
     private SysRoleService sysRoleService;
+
     @ApiOperation(value = "获取全部角色列表")
     @GetMapping("findAll")
     public Result<List<SysRole>> findAll() {
@@ -114,4 +117,20 @@ public class SysRoleController {
             return Result.fail();
         }
     }
+
+    //获取角色
+    @ApiOperation(value = "获取角色")
+    @GetMapping("/toAssign/{userId}")
+    public Result toAssign(@PathVariable Long userId) {
+        Map<String, Object> roleMap = sysRoleService.findRoleDataByUserId(userId);
+        return Result.ok(roleMap);
+    }
+
+    @ApiOperation(value = "根据用户分配角色")
+    @PostMapping("/doAssign")
+    public Result doAssign(@RequestBody AssginRoleVo assginRoleVo) {
+        sysRoleService.doAssign(assginRoleVo);
+        return Result.ok();
+    }
+
 }
