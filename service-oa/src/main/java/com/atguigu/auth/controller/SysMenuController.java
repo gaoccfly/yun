@@ -1,10 +1,10 @@
 package com.atguigu.auth.controller;
 
 
+import com.atguigu.auth.model.system.SysMenu;
 import com.atguigu.auth.service.SysMenuService;
+import com.atguigu.auth.vo.system.AssginMenuVo;
 import com.atguigu.common.result.Result;
-import com.atguigu.model.system.SysMenu;
-import com.atguigu.vo.system.AssginMenuVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
