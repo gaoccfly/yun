@@ -30,13 +30,15 @@ import java.util.Map;
  * </p>
  */
 public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
-  private   RedisTemplate redisTemplate;
+
+    private RedisTemplate redisTemplate;
+
     public TokenLoginFilter(AuthenticationManager authenticationManager, RedisTemplate redisTemplate) {
         this.setAuthenticationManager(authenticationManager);
         this.setPostOnly(false);
         //指定登录接口及提交方式，可以指定任意路径
         this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/admin/system/index/login","POST"));
-        this.redisTemplate=redisTemplate;
+        this.redisTemplate = redisTemplate;
     }
 
     /**
@@ -74,9 +76,8 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
                                             Authentication auth) throws IOException, ServletException {
         CustomUser customUser = (CustomUser) auth.getPrincipal();
         String token = JWTHelper.creatToken(customUser.getSysUser().getId(), customUser.getSysUser().getUsername());
-//获取当前用户权限数据，放到redis key 是username，value 权限数据
+        //保存权限数据
         redisTemplate.opsForValue().set(customUser.getUsername(), JSON.toJSONString(customUser.getAuthorities()));
-
 
         Map<String, Object> map = new HashMap<>();
         map.put("token", token);
