@@ -1,6 +1,7 @@
 package com.atguigu.common.jwt;
 
 import io.jsonwebtoken.*;
+import javafx.beans.binding.Bindings;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
@@ -9,8 +10,9 @@ import java.util.Date;
 @Slf4j
 public class JWTHelper {
     //30分钟过期
-    private static long tokenExpiration = 60 * 30;
+    private static long tokenExpiration = 60 * 30*1000;
     private static String tokenSignKey = "kele1234kele1234kele1234kele1234kele1234kele1234kele1234kele1234kele1234kele1234kele1234kele1234kele1234kele1234kele1234kele1234kele1234kele1234";
+    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
     public static String creatToken(Long userID, String username) {
         String token = Jwts.builder()
@@ -36,10 +38,23 @@ public class JWTHelper {
     }
 
     public static String getUsername(String token) {
+        Claims claims1 = Jwts.parser()
+                .setSigningKey(tokenSignKey)
+                .parseClaimsJws(token)
+                .getBody();
+        Date d1 = claims1.getIssuedAt();
+        Date d2 = claims1.getExpiration();
+        System.out.println("username参数值：" + claims1.get("username"));
+        System.out.println("登录用户的id：" + claims1.getId());
+        System.out.println("登录用户的名称：" + claims1.getSubject());
+        System.out.println("令牌签发时间：" + sdf.format(d1));
+        System.out.println("令牌过期时间：" + sdf.format(d2));
+
         try {
             if (StringUtils.isEmpty(token)) return "";
             Jws<Claims> claimsJws = Jwts.parser().setSigningKey(tokenSignKey).parseClaimsJws(token);
             Claims claims = claimsJws.getBody();
+
             return (String) claims.get("username");
         } catch (ExpiredJwtException e) {
             log.error("token{}过期", token, e);
