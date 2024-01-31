@@ -1,10 +1,7 @@
-package com.atguigu.auth;
+package com.atguigu;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
@@ -13,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 //        SecurityAutoConfiguration.class,
 //        ManagementWebSecurityAutoConfiguration.class
 //})
-@MapperScan("com.atguigu.auth.mapper")
+//@MapperScan("com.atguigu.auth.mapper")
 @ComponentScan("com.atguigu")
 public class ServiceAuthApplication {
 
