@@ -10,7 +10,7 @@ class JWTHelperTest {
     void creatToken01() {
         long a=1;
         String token = JWTHelper.creatToken(a, "admin");
-        System.out.println("token == " + token);
+        System.out.println(" " + token);
 
         Long userId = JWTHelper.getUserId(token);
         String username=JWTHelper.getUsername(token);

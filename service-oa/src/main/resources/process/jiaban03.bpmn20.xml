@@ -4,12 +4,12 @@
         <startEvent id="sid-4FB779DE-0BAC-47EF-9CC2-D4D45C4474EB"></startEvent>
         <userTask id="sid-5CDDEAD3-7774-4A14-9E0D-2C513BA1E1CA" name="经理审批" activiti:assignee="${userBean.getUsername(1)}">
             <extensionElements>
-                <activiti:taskListener event="create" class="com.atguigu.process.bean.MyTaskListener"></activiti:taskListener>
+                <activiti:taskListener event="create" class="MyTaskListener"></activiti:taskListener>
             </extensionElements>
         </userTask>
         <userTask id="sid-8B04C8AF-0FF4-48A5-A0BC-087CD01C11AB" name="人事审批" activiti:assignee="${userBean.getUsername(2)}">
             <extensionElements>
-                <activiti:taskListener event="create" class="com.atguigu.process.bean.MyTaskListener"></activiti:taskListener>
+                <activiti:taskListener event="create" class="MyTaskListener"></activiti:taskListener>
             </extensionElements>
         </userTask>
         <endEvent id="sid-25DD7F24-19C6-4AE2-9A1B-A4E493584FFC"></endEvent>

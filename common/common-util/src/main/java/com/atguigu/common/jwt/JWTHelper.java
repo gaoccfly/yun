@@ -10,7 +10,7 @@ import java.util.Date;
 @Slf4j
 public class JWTHelper {
     //30分钟过期
-    private static long tokenExpiration = 60 * 30*1000;
+    private static long tokenExpiration = 60 * 356;
     private static String tokenSignKey = "kele1234kele1234kele1234kele1234kele1234kele1234kele1234kele1234kele1234kele1234kele1234kele1234kele1234kele1234kele1234kele1234kele1234kele1234";
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 

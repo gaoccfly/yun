@@ -5,16 +5,11 @@
     <parent>
         <artifactId>guigu-oa-parent</artifactId>
         <groupId>com.atguigu</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>model</artifactId>
-
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
 
     <dependencies>
         <!--lombok用来简化实体类-->
@@ -32,7 +27,6 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <scope>provided </scope>
         </dependency>
-
-
     </dependencies>
+
 </project>

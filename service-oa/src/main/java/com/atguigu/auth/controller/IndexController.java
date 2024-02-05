@@ -85,8 +85,8 @@ public class IndexController {
         String token = request.getHeader("token");
 
         // 2、从 token 字符串中获取 用户id 或者 用户名称
-        Long userId = 2L;
-//                JWTHelper.getUserId(token); //1L;
+//      Long userId =   Long userId = 2L;
+        Long userId =  JWTHelper.getUserId(token); //1L;
 
         // 3、根据 用户id 查询数据库， 获取用户信息
         SysUser sysUser = sysUserService.getById(userId);

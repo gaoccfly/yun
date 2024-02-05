@@ -32,6 +32,7 @@ import java.util.Map;
 @Api(value = "审批模板管理", tags = "审批模板管理")
 @RestController
 @RequestMapping(value = "/admin/process/processTemplate")
+@CrossOrigin
 public class OaProcessTemplateController {
     @Autowired
     private OaProcessTemplateService processTemplateService;
@@ -80,7 +81,7 @@ public class OaProcessTemplateController {
         processTemplateService.removeById(id);
         return Result.ok();
     }
-    @PreAuthorize("hasAuthority('bnt.processTemplate.publish')")
+//    @PreAuthorize("hasAuthority('bnt.processTemplate.publish')")
     @ApiOperation(value = "发布")
     @GetMapping("/publish/{id}")
     public Result publish(@PathVariable Long id) {

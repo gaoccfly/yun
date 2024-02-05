@@ -25,6 +25,7 @@ import java.util.List;
 @Api(value = "审批类型", tags = "审批类型")
 @RestController
 @RequestMapping(value = "/admin/process/processType")
+@CrossOrigin
 public class OaProcessTypeController {
     @Autowired
     private OaProcessTypeService processTypeService;

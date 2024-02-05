@@ -1,5 +1,6 @@
 package com.atguigu.process.mapper;
 
+import com.atguigu.auth.model.process.Process2;
 import com.atguigu.auth.vo.process.ProcessQueryVo;
 import com.atguigu.auth.vo.process.ProcessVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -15,6 +16,6 @@ import org.apache.ibatis.annotations.Param;
  * @author smg
  * @since 2024-01-31
  */
-public interface OaProcessMapper extends BaseMapper<Process> {
+public interface OaProcessMapper extends BaseMapper<Process2> {
      IPage<ProcessVo> selectPage(Page<ProcessVo> pageInfo, @Param("vo") ProcessQueryVo processQueryVo);
 }

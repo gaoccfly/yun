@@ -1,11 +1,12 @@
 package com.atguigu.security.filter;
 
-
 import com.alibaba.fastjson.JSON;
+
 import com.atguigu.common.jwt.JWTHelper;
 import com.atguigu.common.result.ResponseUtil;
 import com.atguigu.common.result.Result;
 import com.atguigu.common.result.ResultCodeEnum;
+import com.atguigu.security.custom.LoginUserInfoHelper;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,14 +20,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-/**
- * <p>
- * 认证解析token过滤器
- * </p>
- */
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private RedisTemplate redisTemplate;
@@ -36,9 +33,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
-        logger.info("uri:"+request.getRequestURI());
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain chain) throws ServletException, IOException {
         //如果是登录接口，直接放行
         if("/admin/system/index/login".equals(request.getRequestURI())) {
             chain.doFilter(request, response);
@@ -50,31 +47,37 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             chain.doFilter(request, response);
         } else {
-            ResponseUtil.out(response, Result.build(null, ResultCodeEnum.PERMISSION));
+            ResponseUtil.out(response, Result.build(null, ResultCodeEnum.LOGIN_ERROR));
         }
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        // token置于header里
+        //请求头是否有token
         String token = request.getHeader("token");
-        logger.info("token:"+token);
-        if (!StringUtils.isEmpty(token)) {
+        if(!StringUtils.isEmpty(token)) {
             String username = JWTHelper.getUsername(token);
-            logger.info("useruame:"+username);
-            if (!StringUtils.isEmpty(username)) {
-                String authoritiesString = (String) redisTemplate.opsForValue().get(username);
-                List<Map> mapList = JSON.parseArray(authoritiesString, Map.class);
-                List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-                for (Map map : mapList) {
-                    authorities.add(new SimpleGrantedAuthority((String)map.get("authority")));
+            if(!StringUtils.isEmpty(username)) {
+                //当前用户信息放到ThreadLocal里面
+                LoginUserInfoHelper.setUserId(JWTHelper.getUserId(token));
+                LoginUserInfoHelper.setUsername(username);
+
+                //通过username从redis获取权限数据
+                String authString = (String)redisTemplate.opsForValue().get(username);
+                //把redis获取字符串权限数据转换要求集合类型 List<SimpleGrantedAuthority>
+                if(!StringUtils.isEmpty(authString)) {
+                    List<Map> maplist = JSON.parseArray(authString, Map.class);
+                    System.out.println(maplist);
+                    List<SimpleGrantedAuthority> authList = new ArrayList<>();
+                    for (Map map:maplist) {
+                        String authority = (String)map.get("authority");
+                        authList.add(new SimpleGrantedAuthority(authority));
+                    }
+                    return new UsernamePasswordAuthenticationToken(username,null, authList);
+                } else {
+                    return new UsernamePasswordAuthenticationToken(username,null, new ArrayList<>());
                 }
-                return new UsernamePasswordAuthenticationToken(username, null, authorities);
-            } else {
-                return new UsernamePasswordAuthenticationToken(username, null, new ArrayList<>());
             }
         }
         return null;
     }
-
 }
-

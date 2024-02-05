@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
-  <process id="qingjia002" name="qingjia002" isExecutable="true">
+  <process2 id="qingjia002" name="qingjia002" isExecutable="true">
     <startEvent id="sid-142EAD24-039C-4B5F-9E30-A3CA36F625E7"></startEvent>
     <parallelGateway id="sid-0D4DF8C8-1F84-44BA-8505-C1F8F5D4F92C"></parallelGateway>
     <userTask id="sid-01B1DE23-D223-4BA6-BA65-62218B55A0F1" name="部门经理审批" activiti:assignee="wanwu"></userTask>
@@ -15,7 +15,7 @@
     <sequenceFlow id="sid-9C8694FC-2674-4710-AD16-7F5A57DAEB64" sourceRef="sid-01B1DE23-D223-4BA6-BA65-62218B55A0F1" targetRef="sid-21E059DE-EAA7-4693-BF93-B46B7B497824"></sequenceFlow>
     <sequenceFlow id="sid-D18B23F8-24BF-48C1-AB57-941DE590FD01" sourceRef="sid-21E059DE-EAA7-4693-BF93-B46B7B497824" targetRef="sid-B36EA32B-7FE0-4482-A4E8-598DC5F3F75B"></sequenceFlow>
     <sequenceFlow id="sid-186D117E-55CB-49B8-84E4-C8C4CF788518" sourceRef="sid-B36EA32B-7FE0-4482-A4E8-598DC5F3F75B" targetRef="sid-730EC463-2DB7-47BE-A6BC-8F304EAE49CC"></sequenceFlow>
-  </process>
+  </process2>
   <bpmndi:BPMNDiagram id="BPMNDiagram_qingjia002">
     <bpmndi:BPMNPlane bpmnElement="qingjia002" id="BPMNPlane_qingjia002">
       <bpmndi:BPMNShape bpmnElement="sid-142EAD24-039C-4B5F-9E30-A3CA36F625E7" id="BPMNShape_sid-142EAD24-039C-4B5F-9E30-A3CA36F625E7">

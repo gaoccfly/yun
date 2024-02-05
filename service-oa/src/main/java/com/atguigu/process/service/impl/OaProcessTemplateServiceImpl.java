@@ -4,6 +4,7 @@ package com.atguigu.process.service.impl;
 import com.atguigu.auth.model.process.ProcessTemplate;
 import com.atguigu.auth.model.process.ProcessType;
 import com.atguigu.process.mapper.OaProcessTemplateMapper;
+import com.atguigu.process.service.OaProcessService;
 import com.atguigu.process.service.OaProcessTemplateService;
 import com.atguigu.process.service.OaProcessTypeService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -12,6 +13,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -27,7 +29,10 @@ import java.util.List;
 public class OaProcessTemplateServiceImpl extends ServiceImpl<OaProcessTemplateMapper, ProcessTemplate> implements OaProcessTemplateService {
     @Autowired
     private OaProcessTypeService processTypeService;
-    private OaProcessTemplateMapper processTemplateMapper;
+    @Autowired
+    private OaProcessService processService;
+//    @Autowired
+//    private OaProcessTemplateMapper processTemplateMapper;
     //1.分页查询审批模版，把审批类型对应名称查询
 //    TypeService;    //2.第一步分页查询返回分页数据，从分页数据获取list集合
 //    3.遍历list集合，得到每个对象的审批类型id
@@ -62,5 +67,10 @@ public class OaProcessTemplateServiceImpl extends ServiceImpl<OaProcessTemplateM
         baseMapper.updateById(processTemplate);
 
         //TODO 部署流程定义，后续完善
+        //优先发布在线流程设计
+        if(!StringUtils.isEmpty(processTemplate.getProcessDefinitionPath())) {
+            processService.deployByZip(processTemplate.getProcessDefinitionPath());
+        }
     }
+
 }
